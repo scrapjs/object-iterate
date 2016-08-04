@@ -24,12 +24,14 @@ var objective = function objective(obj) {
 
   var updateCache = function updateCache(key) {
     cache.push(key);
-    leng = cache.length;
+    l = cache.length;
   };
 
   var set = function set(k, v) {
     updateCache(k);
     obj[k] = v;
+
+    return obj;
   };
 
   var map = function map(cb) {
@@ -55,11 +57,38 @@ var objective = function objective(obj) {
     return objective(o);
   };
 
+  // kill property on object
+  var kill = function kill(prop) {
+    if (!l) return;
+
+    if (!obj[prop]) return;
+    delete obj[prop];
+
+    return obj;
+  };
+
+  // forcing cache props revaluating
+  var force = function force() {
+    cache = Object(keys).length;
+    l = cache.length;
+    return obj;
+  };
+
+  // helper for force kill mix
+  var forceKill = function forceKill(prop) {
+    kill(prop);
+    return force();
+  };
+
+  // define readable methods
   Object.defineProperties(obj, {
     set: { value: set },
     each: { value: each },
     map: { value: map },
-    filter: { value: filter }
+    filter: { value: filter },
+    force: { value: force },
+    kill: { value: kill },
+    forceKill: { value: forceKill }
   });
 
   return obj;
