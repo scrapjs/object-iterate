@@ -12,11 +12,11 @@ var objective = function objective(obj) {
   var cache = Object.keys(obj);
   var l = cache.length;
 
-  var each = function each(cb, o) {
+  var each = function each(cb) {
     if (!l) return;
 
     cache.forEach(function (k) {
-      cb(o || obj[k], k, obj);
+      cb(obj[k], k, obj);
     });
 
     return obj;
@@ -27,35 +27,21 @@ var objective = function objective(obj) {
     leng = cache.length;
   };
 
-  var set = function set(k, v, o) {
+  var set = function set(k, v) {
     updateCache(k);
-
-    return o ? o[k] = v : obj[k] = v;
+    obj[k] = v;
   };
 
-  var map = function map(cb, objekt) {
+  var map = function map(cb) {
     if (!l) return;
 
     var o = cache.reduce(function (acc, k) {
-      var io = objekt[k] || obj[k];
-      acc[k] = cb(io, k, o) || io;
+      acc[k] = cb(obj[k], k, o) || obj[k];
       return acc;
     }, {});
 
-    // define iterables on new object
-    Object.defineProperties(o, {
-      each: { value: function value(cb) {
-          return each.call(cb, o);
-        } },
-      map: { value: function value(cb) {
-          return map.call(cb, o);
-        } },
-      set: { value: function value(k, v) {
-          return set.call(k, v, o);
-        } }
-    });
-
-    return o;
+    // return iterable object
+    return objective(o);
   };
 
   Object.defineProperties(obj, {
