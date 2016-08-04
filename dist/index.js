@@ -40,14 +40,26 @@ var objective = function objective(obj) {
       return acc;
     }, {});
 
-    // return iterable object
+    return objective(o);
+  };
+
+  var filter = function filter(cb) {
+    if (!l) return;
+
+    var o = cache.reduce(function (acc, k) {
+      if (cb(obj[k], k, o)) acc[k] = obj[k];
+
+      return acc;
+    }, {});
+
     return objective(o);
   };
 
   Object.defineProperties(obj, {
     set: { value: set },
     each: { value: each },
-    map: { value: map }
+    map: { value: map },
+    filter: { value: filter }
   });
 
   return obj;

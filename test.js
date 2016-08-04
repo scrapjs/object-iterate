@@ -9,6 +9,8 @@ var t = objective({test: 'test'})
   })
 
 
-t.each(function (value) {
+console.log(t.each(function (value) {
   console.log(value)
-})
+}).filter(function (value) {
+  return value !== 'hacked'
+}))
