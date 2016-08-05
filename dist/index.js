@@ -2,7 +2,7 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var objective = function objective(obj) {
+var Iterable = function Iterable(obj) {
   var isobject = function isobject(obj) {
     return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && {}.toString.call(obj) === '[object Object]';
   };
@@ -42,7 +42,7 @@ var objective = function objective(obj) {
       return acc;
     }, {});
 
-    return objective(o);
+    return Iterable(o);
   };
 
   var filter = function filter(cb) {
@@ -54,33 +54,29 @@ var objective = function objective(obj) {
       return acc;
     }, {});
 
-    return objective(o);
+    return Iterable(o);
   };
 
-  // kill property on object
   var kill = function kill(prop) {
     if (!l) return;
 
-    if (!obj[prop]) return;
+    if (!(prop in obj)) return;
     delete obj[prop];
 
     return obj;
   };
 
-  // forcing cache props revaluating
   var force = function force() {
-    cache = Object(keys).length;
+    cache = Object.keys(obj);
     l = cache.length;
     return obj;
   };
 
-  // helper for force kill mix
   var forceKill = function forceKill(prop) {
     kill(prop);
     return force();
   };
 
-  // define readable methods
   Object.defineProperties(obj, {
     set: { value: set },
     each: { value: each },
@@ -94,4 +90,4 @@ var objective = function objective(obj) {
   return obj;
 };
 
-module.exports = objective;
+module.exports = Iterable;
