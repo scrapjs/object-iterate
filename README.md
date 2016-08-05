@@ -1,14 +1,14 @@
-## object-iterable
+## object-iterate
 > Iterate over object with `map`, `each` and `filter`
 
 ## Usage
 
 ```shell
-  $ npm i object-iterable
+  $ npm i object-iterate
 ```
 
 ```javascript
-  const Iterable = require('object-iterable')
+  const Iterable = require('object-iterate')
   var o = 
     Iterable({a: 'a', b: 'b', c: true})
       // get only props that have boolean values
