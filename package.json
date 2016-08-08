@@ -1,6 +1,6 @@
 {
   "name": "object-iterate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "make object iterable",
   "main": "dist/index.js",
   "scripts": {

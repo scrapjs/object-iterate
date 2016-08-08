@@ -12,70 +12,58 @@ var Iterable = function Iterable(obj) {
   var cache = Object.keys(obj);
   var l = cache.length;
 
-  var each = function each(cb) {
+  function each(cb) {
     if (!l) return;
-
     cache.forEach(function (k) {
       cb(obj[k], k, obj);
     });
-
     return obj;
-  };
+  }
 
-  var updateCache = function updateCache(key) {
-    cache.push(key);
-    l = cache.length;
-  };
-
-  var set = function set(k, v) {
-    updateCache(k);
-    obj[k] = v;
-
-    return obj;
-  };
-
-  var map = function map(cb) {
+  function map(cb) {
     if (!l) return;
-
-    var o = cache.reduce(function (acc, k) {
+    return Iterable(cache.reduce(function (acc, k) {
       acc[k] = cb(obj[k], k, o) || obj[k];
       return acc;
-    }, {});
+    }, {}));
+  }
 
-    return Iterable(o);
-  };
-
-  var filter = function filter(cb) {
+  function filter(cb) {
     if (!l) return;
-
-    var o = cache.reduce(function (acc, k) {
+    return Iterable(cache.reduce(function (acc, k) {
       if (cb(obj[k], k, o)) acc[k] = obj[k];
-
       return acc;
-    }, {});
+    }, {}));
+  }
 
-    return Iterable(o);
-  };
+  function updateCache(key) {
+    cache.push(key);
+    l = cache.length;
+  }
 
-  var kill = function kill(prop) {
+  function set(k, v) {
+    updateCache(k);
+    obj[k] = v;
+    return obj;
+  }
+
+  function kill(prop) {
     if (!l) return;
-
     if (!(prop in obj)) return;
     delete obj[prop];
-
     return obj;
-  };
+  }
 
-  var force = function force() {
+  function force() {
     cache = Object.keys(obj);
     l = cache.length;
     return obj;
-  };
+  }
 
-  var forceKill = function forceKill(prop) {
+  function forceKill(prop) {
     kill(prop);
     return force();
-  };
+  }
 
   Object.defineProperties(obj, {
     set: { value: set },
