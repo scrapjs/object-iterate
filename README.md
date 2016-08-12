@@ -36,8 +36,8 @@
      // reinit cache calling Object.keys, so now it's actually up-to-date
      
      o.forceKill(b) // will kill and call force
-
-		o.returnIterable() //return an iterable copy of the object, that works with for..of
+     
+     o.returnIterable() //return an iterable copy of the object, that works with for..of
 
 ```
 
@@ -137,6 +137,16 @@ helper for kill + force combo
 ```javascript
 
 iterable.forceKill('dev')
+
+```
+
+`Iterable.returnIterable` 
+
+returns iterable copy of the object
+
+```javascript
+
+iterable.returnIterable()
 
 ```
 
