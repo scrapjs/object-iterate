@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const test = require('tape');
-const Iterable = require('../dist/index');
+const test = require('tape')
+const Iterable = require('../dist/index')
 
 test(' `Iterable` should be a function ' , (t) => {
   t.plan(1)
@@ -47,17 +47,17 @@ test(' `Iterable` methods should only iterate on actual props ' , (t) => {
   var l = []
 
   Iterable({})
-    .each( (value) => {
+    .each((value) => {
       l.push(value)
     })
 
   Iterable({})
-    .map( (value) => {
+    .map((value) => {
       l.push(value)
     })
 
   Iterable({})
-    .filter( (value) => {
+    .filter((value) => {
       l.push(value)
     })
 
@@ -80,12 +80,25 @@ test(' `Iterable.kill` should remove existed prop ' , (t) => {
 })
 
 test(' `Iterable.forceKill` should remove prop and update cache ' , (t) => {
-   t.plan(1)
-   var obj = Iterable({ beep: true }).forceKill('beep')
-   var props = []
-   obj.each(function (value, key) {
-     push({value: value, key: key})
-   })
-   t.equal(props.length, 0)
-   t.end()
+  t.plan(1)
+  var obj = Iterable({ beep: true }).forceKill('beep')
+  var props = []
+  obj.each(function (value, key) {
+    push({value: value, key: key})
+  })
+  t.equal(props.length, 0)
+  t.end()
+})
+
+test(' `Iterable.returnIterable` should return iterable copy of object', (t) => {
+  t.plan(5)
+  var iterable = Iterable({name: 'pikachu'}).returnIterable()
+  var result = iterable.next()
+  t.equal(result.done, false)
+  t.equal(result.value.key, 'name')
+  t.equal(result.value.value, 'pikachu')
+  result = iterable.next()
+  t.equal(result.done, true)
+  t.equal(result.value, undefined)
+  t.end()
 })
