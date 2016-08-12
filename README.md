@@ -36,6 +36,9 @@
      // reinit cache calling Object.keys, so now it's actually up-to-date
      
      o.forceKill(b) // will kill and call force
+
+		o.returnIterable() //return an iterable copy of the object, that works with for..of
+
 ```
 
 ## API
